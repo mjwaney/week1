@@ -1,11 +1,16 @@
+<!DOCTYPE html>
 <!-- php tag -->
-<?php 
-?>
-
-<!-- echo tag -->
-<?= 'echo tag<br>'; ?>
-
 <?php
+	require_once("assignment.php");
+
+$week1 = new Assignment("Week 1 - PHP Basics");
+$week1->assignment("Pas de Standard Tag en Echo Tag toe");
+
+	//echo en standaard tag
+	$week1->echoThis(htmlspecialchars("<?php ?>"));
+	$week1->echoThis(htmlspecialchars("<?= ?>"));
+	?><?php
+
 	// single line comment 1
 
 	#single line comment 2
@@ -14,278 +19,279 @@
 	multi line comment
 	*/
 
+$week1->endAssignment();
+$week1->assignment("Experimenteer met de 4 scalar data-types en toon aan met de gettype-functie welke data-type je gebruikt hebt ");
+
 	// boolean
-	echo '<br>Result boolean:<br>';
 	$story = true;
-	echo gettype($story) . '<br>';
+	$week1->echoThis("Result boolean: " . gettype($story));
 
 	// int
-	echo '<br>Result int:<br>';
-	$week1 = 1;
-	echo gettype($week1) . '<br>';
+	$int = 1;
+	$week1->echoThis("Result int: " . gettype($int));
 
 	// float
-	echo '<br>Result float:<br>';
 	$php = 5.6;
-	echo gettype($php) . '<br>';
+	$week1->echoThis("Result float: " . gettype($php));
 
 	// string
-	echo '<br>Result string:<br>';
 	$weekOne = '1';
-	echo gettype($weekOne) . '<br>';
+	$week1->echoThis("Result int: " . gettype($weekOne));
 
-	//casting
-	echo '<br>Result casting:<br>';
-	echo gettype((string) $story) . '<br>';
-	echo gettype((string) $week1)  . '<br>';
-	echo gettype((int) $php) . '<br>';
-	echo gettype((int) $weekOne) . '<br>';
+$week1->endAssignment();
+$week1->assignment("Experimenteer met type-casting voor elke data-type");
 
-	//variable variables
-	echo '<br>Result variable variables:<br>';
-	$secret = 'youRock';
-	$$secret = 'You Suck!';
-	echo $youRock;
-	echo '<br>';
+	$week1->echoThis("Result casting: " . gettype((string) $story) . ", ". gettype((string) $int) . ", ". gettype((int) $php) . ", ". gettype((double) $weekOne));
+	
+	//cast to array
+	$i = (array) 7;
+	$week1->dumpThis($i);
 
-	//constants
-	echo '<br>Result constants:<br>';
-	define('STATEMENT', 'Dogs are better pets than cats.');
-	echo STATEMENT;
-	echo '<br>';
+	//casting functions
+	$string = "8";
+	$toInt = intval($string);
+	$toFloat = floatVal($string);
+	$toString = strval($toFloat);
+	$toBool = boolval($string);
+	$new = "9";
+	$nl = null;
+	class Obj1{}
+	$obj1 = new Obj1;
+	settype($new, "integer"); //returns a boolean value so only define it --->
+	$week1->echoThis("Casting functions: <br>");
+	$week1->echoThis($toInt . " is a(n) " . gettype($toInt) . "<br>");
+	$week1->echoThis($toFloat . " is a(n) " . gettype($toFloat) . "<br>");
+	$week1->echoThis($toString . " is a(n) " . gettype($toString) . "<br>");
+	$week1->echoThis($toBool . " is a(n) " . gettype($toBool) . "<br>");
+	$week1->echoThis($new . " is a(n) " . gettype($new) . "<br>");//-->and call variable to get the actual value
+	$week1->echoThis(is_int($toInt) . " " . is_float($toFloat) . " " . is_string($toString) . " " . is_bool($toBool)
+	 . " " . is_null($nl) . " " . is_array($i) . " " . is_object($obj1));
 
-	//var dump
-	echo '<br>Result var_dump:<br>';
-	var_dump(STATEMENT);
+$week1->endAssignment();
+$week1->assignment("Experimenteer met type-casting van array naar een object ");
+	
+	$object = (object) $i;
+	$week1->dumpThis($object);
 
-	//print_r
-	echo '<br>Result print_r:<br>';
-	$pets = array('dogs', 'cats', 'rabbits', 'rhinos');
-	print_r($pets);
-	echo '<br>';
-
-	//debug_zval_dump
-	echo '<br>Result zval_dump:<br>';
-	debug_zval_dump($pets);
-	echo '<br>';
-
-	//isset and empty
-	echo '<br>Result isset:<br>';
-	$notNull = "";
-
-	if(isset($notNull))
-		echo $notNull . " is set";
-	echo '<br>';
-
-
-	echo '<br>Result empty:<br>';
-	if(!empty($notNull))
-		echo $notNull . " is set";
-	else
-		echo 'empty but not null';
-
-	// cast from array to object
-	echo '<br>Result casting arry to object:<br>';
-	$petObject = (object) $pets;
-	var_dump($petObject);
+$week1->endAssignment();
+$week1->assignment("Experimenteer met variable variablen");
 
 	
-	//assignment operator & arithmetic operators
+	$secret = 'youRock';		
+	$$secret = 'You Suck!'; //$$secret references the contents of $secret, creating the new variable $youRock
+	$week1->echoThis("Results variable variables: " . $youRock);
 
+	$a = 'start';
+	$b = 'a';
+	$c = 'b';
+	$d = 'c';
+
+	$week1->echoThis("Nested variable variables:<br>" . $d . "<br>" . $$d . "<br>" . $$$d . 
+		"<br>" . $$$$d . "<br>");
+
+	//circumventing naming constraints
+	$number = '123';
+	$$number = 'I\'m in an invalid variable';	
+	$week1->echoThis(${'123'} . "<br>"); //echo out variable 
+
+$week1->endAssignment();
+$week1->assignment("Pas CONSTANTS toe in een PHP-script");
+
+	define('STATEMENT', 'Dogs are better pets than cats.');
+	const WALL = "Wall";
+	$week1->echoThis("Result constants:" . STATEMENT . " " . WALL);
+$week1->endAssignment();
+$week1->assignment("Experimenteer met var_dump, print_r en debug_zval_dump");
+	//var dump
+	$week1->dumpThis("Result var_dump: ". STATEMENT);
+
+	//print_r
+	$pets = array('dogs', 'cats', 'rabbits', 'rhinos');
+	$week1->printRThis($pets);
+
+	//debug_zval_dump
+	$week1->zvalThis($pets);
+$week1->endAssignment();
+$week1->assignment("Pas de isset() en empty() functies toe ");
+	
+	//isset and empty
+	$notNull = "";
+	if(isset($notNull))
+		$week1->echoThis("Variable is set");
+
+	if(!empty($notNull))
+		$week1->echoThis("Variable is set");
+	else
+		$week1->echoThis("Variable is empty but not null");
+
+$week1->endAssignment();
+$week1->assignment("Experimenteer met de veelgebruikte operators: Assignment Operators, de 6 Arithmetic Operators, String Operators, Comparison Operators (4 Equivalence Operators en 2 Inequality Operators) en Logical Operators");
+	
 	//concatenation
-	echo '<br>Result assignment operator & arithmetic operators:<br>';
-	$youRock .= " Just Kidding!";
-	echo $youRock;
-	echo '<br>';
-
+	$youRock .= " Just Kidding!";	
 	$weight = 500;
-	echo 'Yo Momma weighs ' . $weight . ' tonnes';
-	echo '<br>';
+
+	$week1->echoThis("Concatenation: " . $youRock . "<br>" . "Yo Momma weighs " . $weight . " tonnes");
 
 	//multiplication
 	$weight *= 20;
-	echo 'Yo Momma weighs ' . $weight . ' tonnes';
-	echo '<br>';
+	$week1->echoThis("Multiplication: Yo Momma weighs " . $weight . " tonnes");
 
 	//exponentiation
 	$weight **= 2;
-	echo 'Yo Momma weighs ' . $weight . ' tonnes';
-	echo '<br>';
+	$week1->echoThis("Exponentiation: Yo Momma weighs " . $weight . " tonnes");
 
 	//divison
 	$weight /= 2;
-	echo 'Yo Momma lost weight, she only weighs ' . $weight . ' tonnes now';
-	echo '<br>';
+	$week1->echoThis("Yo Momma lost weight, she only weighs " . $weight . " tonnes now");
 
 	//addition
 	$binary0 = 0;
 	$binary1 = 1;
-	echo 'Yo momma so fat, her facebook profile consists of ' . ($binary1+2) . '\'s and ' . ($binary0+2) . '\'s, instead of ' . $binary1 . '\'s and ' . $binary0 . '\'s.';
-	echo '<br>';
+	$week1->echoThis("Yo momma so fat, her facebook profile consists of " . ($binary1+2) . "\'s and " . ($binary0+2) . "\'s, instead of " . $binary1 . "\'s and " . $binary0 . "\'s.");
 
 	//subtraction
 	$neck = 1;
-	echo 'Yo momma so fat she has ' . ($neck-1) . ' neck';
-	echo '<br>';
+	$week1->echoThis("Yo momma so fat she has " . ($neck-1) . " neck");
 	
 	//modulus
 	$chins = 8;
-	echo 'Yo momma so fat she has ' .($chins%3) . ' extra chins'; 
-	echo '<br>';
+	$week1->echoThis("Yo momma so fat she has " . ($chins%3) . " extra chins"); 
 
 	//string operatpr
 	$yoMomma = 'Yo momma';
 	$still = " is still fat";
-	echo $yoMomma . $still;
-	echo '<br>';
+	$week1->echoThis($yoMomma . $still);
 
 	//same as
 	$weight = 10;
 	$newWeight = $weight;
-	echo 'Looking good! Only weighing '  . $newWeight . ' tonnes now instead of ' . $weight . '... Oh wait!'; 
-	echo '<br>';
+	$week1->echoThis("Looking good! Only weighing "  . $newWeight . " tonnes now instead of " . $weight . "... Oh wait!"); 
 
 	//comparison operators
-	echo '<br>Result comparison operators:<br>';
 	$yoMomma = 10;
-
+	$result = "";
 	//equal
 	if($yoMomma == 10)
-		echo 'still fat';
+		$result = 'still fat';
 
-	echo '<br>';
+	$week1->echoThis("Yo moma is " . $result);
 
 	//identical
 	if($yoMomma === '10')
-		echo 'Maybe I was wrong';
+		$week1->echoThis("Maybe I was wrong");
 	else
-		echo 'Nope.';
-
-	echo '<br>';
+		$week1->echoThis("Nope.");
 
 	//not equal
 	$yoMomma = 'fat';
 
 	if($yoMomma != 'fat')
-		echo 'Maybe I was wrong';
+		$week1->echoThis("Maybe I was wrong");
 	else
-		echo 'Nope.';
+		$week1->echoThis("Nope.");
 
-	echo '<br>';
 	$cruiseShipSize = 9;
 
 	if($yoMomma <> $cruiseShipSize)
-		echo 'She\'s probably bigger...';
+		$week1->echoThis("She\'s probably bigger...");
 	else
-		echo 'Woah!';
-	echo '<br>';
+		$week1->echoThis("Woah!");
 
 	// Not identical
 	$yoMomma = 10;
 
 	if($yoMomma !== 10)
-		echo 'She\'s probably bigger...';
+		$week1->echoThis("She\'s probably bigger...");
 	else
-		echo 'thought so...';
-		echo 'yup';
-	echo '<br>';
+		$week1->echoThis("thought so...");
 
 	// >, <, >=. <=
-	echo '<br>Result >, <, >=. <=:<br>';
+	$week1->echoThis("Result >, <, >=. <=:<br>");
 	if($yoMomma > $cruiseShipSize)
-		echo 'yup';
+		$week1->echoThis("yup");
 	echo '<br>';
 	if($yoMomma >= $cruiseShipSize)
-		echo 'yup';
+		$week1->echoThis("yup");
 	echo '<br>';
 	if($yoMomma < ($cruiseShipSize + 2))
-		echo 'Only by a bit tho...';
-	echo '<br>';
+		$week1->echoThis("Only by a bit tho...");
+
 	if($yoMomma <= ($cruiseShipSize + 2))
-		echo 'Only by a bit tho...';
-	echo '<br>';
+		$week1->echoThis("Only by a bit tho...");
 
 	//logical operators 'and' same as &&
-	echo '<br>Result logical operators:<br>';
+	$week1->echoThis("Result logical operators:<br>");
 	$pinocchioNoseGrows = true;
 	$pinocchioSaysNoseIsGrowing = true;
 	if($pinocchioNoseGrows and $pinocchioSaysNoseIsGrowing)
-		echo 'how?';
-	echo '<br>';
+		$week1->echoThis("how?");
 
 	// or ||
 	if($pinocchioNoseGrows or $pinocchioSaysNoseIsGrowing)
-		echo 'can\'t logically have both';
-	echo '<br>';
+		$week1->echoThis("can\'t logically have both");
 
 	// xor
 	if($pinocchioNoseGrows xor $pinocchioSaysNoseIsGrowing)
-		echo 'paradox, the universe will implode';
-	echo '<br>';
+		$week1->echoThis("paradox, the universe will implode");
 
-	echo '<br>Result bitwise operators:<br>';
+$week1->endAssignment();
+$week1->assignment("Experimenteer met Bitwise Operators, Error Control Operators, Execution Operators, Incrementing/Decrementing Operators en Type Operators ");
+
 	// ~
 	$i = 10533214;
-	echo ~$i;
-	echo '<br>';
+	$week1->echoThis("<br>Result bitwise operators:<br>" . ~$i);
 
 	// & 
 	if(rand(1, 1000) & 1)
-	    echo "Odd number."; //rightmost bit is 1, so it will always be an odd number
+	    $week1->echoThis("Odd number."); //rightmost bit is 1, so it will always be an odd number
 	else
-	    echo "Even number.";  //rightmost bit is 0, so it will always be an even number
-	echo '<br>';
+	    $week1->echoThis("Even number.");  //rightmost bit is 0, so it will always be an even number
 
 	//Note: This method is faster performance wise to check for even and odd numbers than %2
 
 	// |
 	$x=5;  
 	$y=11;  
-	echo $x | $y; 
+	$week1->echoThis(x | $y); 
 
 	// ^
 	$x=12;  
 	$y=11;  
-	echo $x ^ $y;
+	$week1->echoThis($x ^ $y);
 
 	// << and >>
 
 	//Error control operators
-	echo '<br>Result error control operator:<br>';
+	$week1->echoThis("Result error control operator:<br>");
 	// $db = @mysql_connect( "unconnectable.com" );
 	// if( $db === false )
 	// {
-	//    echo "Could not connect to server.";
+	//    $week1->echoThis("Could not connect to server.");
 	//    exit();
 	// }
-	echo '<br>';
 
 	//backticks
-	echo '<br>Backticks<br>';
+	$week1->echoThis("Backticks<br>");
 	$host = 'www.google.com';
-	    echo `ping -n 3 {$host}`;
-	echo '<br>';
+	    $week1->echoThis(`ping -n 3 {$host}`);
 
 	// Incrementing/Decrementing Operators
-	echo '<br>Result Incrementing/Decrementing Operators:<br>';
+	$week1->echoThis("Result Incrementing/Decrementing Operators:<br>");
 	$blah = 50;
-	echo ++$blah;
-	echo '<br>';
+	$week1->echoThis(++$blah);
 
 	$blah = 50;
-	echo $blah++ . ' after->' . $blah;
-	echo '<br>';
+	$week1->echoThis($blah++ . " after->" . $blah);
 
 	$blah = 50;
-	echo --$blah;
-	echo '<br>';
+	$week1->echoThis(--$blah);
 
 	$blah = 50;
-	echo $blah-- . ' after->' . $blah;
-	echo '<br>';
+	$week1->echoThis($blah-- . ' after->' . $blah);
 
 	//Type Of
-	echo '<br>Result Type Of<br>';
+	$week1->echoThis("Result Type Of<br>");
 	class PHP
 	{
 	}
@@ -295,76 +301,84 @@
 	}
 	$class = new PHP;
 
-	var_dump($class instanceof PHP);
-	var_dump($class instanceof CyberSecurity);
+	$week1->dumpThis($class instanceof PHP);
+	$week1->dumpThis($class instanceof CyberSecurity);
 
+$week1->endAssignment();
+$week1->assignment("Experimenteer met if-elseif-else statements, en nested if-else statements ");
 	//if else & nested
-	echo '<br>Result if else & nested:<br>';
+	$week1->echoThis("Result if else & nested:");
 	$rand = rand(1, 10);
 
 	if($rand == 1)
-		echo $rand . ": bad";
+		$week1->echoThis($rand . ": bad");
 	elseif($rand == 2)
-		echo $rand . ": still bad";
+		$week1->echoThis($rand . ": still bad");
 	elseif($rand > 2)
 		if($rand == 3)
-			echo $rand . ": still kinda bad";
+			$week1->echoThis($rand . ": still kinda bad");
 		elseif($rand == 4)
-			echo $rand . ": below average";
+			$week1->echoThis($rand . ": below average");
 	else
-		echo $rand . ": good enough";
-	echo '<br>';
+		$week1->echoThis($rand . ": good enough");
+$week1->endAssignment();
+$week1->assignment("Experimenteer met de ternary operator en laat in een comment een vergelijkbare if/else statement zien");
 
 	//ternary
-	echo '<br>Result Ternary Operator:<br>';
-	$result = ($rand < 5) ? 'meh: ' : 'good enough: '; //if($rand < 5) $result = 'meh' else $result = 'good enough';
-	echo $result . $rand;
-	echo '<br>';
+	$week1->echoThis("Result Ternary Operator:");
+	$result = ($rand < 5) ? "meh: " : "good enough: "; //if($rand < 5) $result = 'meh' else $result = 'good enough';
+	$week1->echoThis($result . $rand);
+
+$week1->endAssignment();
+$week1->assignment("Experimenteer met een if/else-statement i.c.m. de isset() en empty() functies ");
 
 	//ifelse + isset()/empty()
-	echo '<br>Result ifelse + isset()/empty()<br>';
+	$week1->echoThis("Result ifelse + isset()/empty()");
 	$notset = '';
 
 	if(!empty($notset))
-		echo $notset;
+		$week1->echoThis($notset);
 	elseif(isset($notset))
-		echo 'is set but empty';
-	echo '<br>';
+		$week1->echoThis("is set but empty");
 
+$week1->endAssignment();
+$week1->assignment("Experimenteer met switch-case statement (incl default)");
 	//switch
-	echo '<br>Result switch:<br>';
+	$week1->echoThis("Result switch:");
 	switch($rand)
 	{
 		case 1:
 		case 2:
 		case 3:
-			echo "Score is: " . $rand . " which is bad";
+			$week1->echoThis("Score is: " . $rand . " which is bad");
 			break;
 		case 4:
 		case 5:
 		case 6:
-			echo "Score is: " . $rand . " which is not that great";
+			$week1->echoThis("Score is: " . $rand . " which is not that great");
 			break;
 		case 7:
 		case 8:
-			echo "Score is: " . $rand . " which is great";
+			$week1->echoThis("Score is: " . $rand . " which is great");
 			break;
 		case 9:
 		case 10:
-			echo "Score is: " . $rand . " which is amazing";
+			$week1->echoThis("Score is: " . $rand . " which is amazing");
 			break;
 		default:
-			echo "Score not set...";
+			$week1->echoThis("Score not set...");
 			break;
 	}
-	echo '<br>';
+
+$week1->endAssignment();
+$week1->assignment("Experimenteer met while, do/while, for, for each en pas ook break en continue toe ");
 
 	//while, do-while, for, foreach, break continue
-	echo '<br>Result while, do-while, for, foreach, break continue:<br>';
+	$week1->echoThis("Result while, do-while, for, foreach, break continue:");
 	$i = 0;
 	do
 	{
-		echo "Just do it <br>";
+		$week1->echoThis("Just do it");
 		$i++;
 	}
 	while($i > 3); //stops right away
@@ -375,41 +389,51 @@
 		for($n = 0; $n < 21023; $n++)
 		{
 			if($n == 1){
-				echo "skipping a bunch of iterations <br>";
+				$week1->echoThis("skipping a bunch of iterations");
 				continue;
 			}
 		}
-		echo "stopping after first while loop";
+		$week1->echoThis("stopping after first while loop");
 		break;
 	}
-	echo '<br>';
 
 	foreach($pets as $pet)
-		echo $pet . '<br>';
+		$week1->echoThis($pet);
 
+$week1->endAssignment();
+$week1->assignment("Pas in 2 verschillende bestanden de 2 manieren voor namespaces toe ");
+$week1->endAssignment();
+$week1->assignment("Pas in 1 bestand 2 verschillende namespaces toe ");
+$week1->endAssignment();
+$week1->assignment("Pas de namespaces toe in een bestand");
 	//namespaces
-	echo '<br>Result namespaces:<br>';
+	$week1->echoThis("Result namespaces:");
 	include('include_me.php');
-	echo $include;
-	echo '<br>';
+	$week1->echoThis($include);
 
 	require('require_me.php');
-	echo $require;
-	echo '<br>';
+	$week1->echoThis($require);
+
+$week1->endAssignment();
+$week1->assignment("Experimenteer met sub-namespaces ");
+$week1->endAssignment();
+$week1->assignment("Experimenteer met namespaces: Dynamic Usage en Aliasing ");
 
 	//Dynamic Usage
 	use Again\Thanks;
 
 	$class = new Thanks\Hello();
 	
-	$class->blah();
-	echo '<br>';
+	$week1->echoThis($class->blah());
 
 	//Aliasing
 	use Again\Thanks\Hello as Hi;
 
 	$hi = new Hi();
 	$hi->blah();
-	echo '<br>';
+	$week1->echoThis($hi->blah());
 
+$week1->endAssignment();
+$week1->endWeek();
 ?>	
+</html>
